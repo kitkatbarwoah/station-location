@@ -1,4 +1,4 @@
-# station-location
+# ***station-location***
 **This GitHub repository exists to store and back up scripts for my Roblox Studio project *Station Location*.**
 
 ## End-Product Summary
@@ -31,3 +31,20 @@ The current plan for Station Location's developmental process will consist of th
 **Roblox Studio** will be where the majority of the development of Station Location will take place. It provides both a Luau scripting service (Roblox Studio's modified Lua service) as well as a 3D workspace. **Blender** will be used to create complex 3D models that would otherwise be difficult/inefficient to make in Roblox Studio.
 ## Project Owner
 I, Aidan Collis, am the sole creator of this project.
+
+----
+
+## Coding Contents/Folders
++ *Replicated Storage*
+  + Here is where objects that do not exist within the main workspace but can be added in and cloned later by other scripts stay
+  + Additionally, functions that are called by scripts are typically stored here
+  + Will primarily feature scripts about specific 3D interactions
++ *ServerScriptService*
+  + Here is where all server scripts can kept to run as the server is launched
+  + Will primarily feature scripts discussing variables, server properties, and other miscellaneous interactions
++ *StarterGUI*
+  + Here is where all 2D displays exist within that can be displayed on a player's screen
+  + Will primarily feature local player sided scripts that display updated information retrieved from the server as well as sending information back to it with things such as button presses
++ *StarterPlayer*
+  + Here is where scripts regarding players and their characters are kept
+  + Will primarily feature niche scripts for changing character appearance as well as keybind changes
