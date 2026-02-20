@@ -29,10 +29,6 @@ The current plan for Station Location's developmental process will consist of th
 ㅤ**Roblox Studio**ㅤㅤㅤㅤㅤㅤㅤ**Blender**ㅤ
 
 **Roblox Studio** will be where the majority of the development of Station Location will take place. It provides both a Luau scripting service (Roblox Studio's modified Lua service) as well as a 3D workspace. **Blender** will be used to create complex 3D models that would otherwise be difficult/inefficient to make in Roblox Studio.
-## Project Owner
-I, Aidan Collis, am the sole creator of this project.
-
-----
 
 ## Coding Contents/Folders
 + *Replicated Storage*
@@ -44,7 +40,12 @@ I, Aidan Collis, am the sole creator of this project.
   + Will primarily feature scripts discussing variables, server properties, and other miscellaneous interactions
 + *StarterGUI*
   + Here is where all 2D displays exist within that can be displayed on a player's screen
-  + Will primarily feature local player sided scripts that display updated information retrieved from the server as well as sending information back to it with things such as button presses
+  + Will primarily feature local player sided scripts that display updated information retrieved from the server as well as sending information back to it with interactions such as button presses
 + *StarterPlayer*
   + Here is where scripts regarding players and their characters are kept
   + Will primarily feature niche scripts for changing character appearance as well as keybind changes
+
+## Project Ownership and Purpose
+I, Aidan Collis, am the sole creator of this project. I can be contacted through my gmail at ahcollis2@gmail.com.
+
+This project was created for entertainment and out of passion for the asymmetrical genre, as I have become increasingly interested in it over the past few months.
