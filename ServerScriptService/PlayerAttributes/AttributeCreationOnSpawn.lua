@@ -28,4 +28,12 @@ game.Players.PlayerAdded:Connect(function(player)
 	maxStm.Name = "MaxStamina"
 	maxStm.Value = 100
 	
+	local wlkSpd = Instance.new("IntValue", playerVar)
+	wlkSpd.Name = "WalkSpeed"
+	wlkSpd.Value = 10
+	
+	local runSpd = Instance.new("IntValue", playerVar)
+	runSpd.Name = "RunSpeed"
+	runSpd.Value = 26
+	
 end)
