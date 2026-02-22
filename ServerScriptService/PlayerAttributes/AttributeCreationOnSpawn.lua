@@ -12,27 +12,27 @@ game.Players.PlayerAdded:Connect(function(player)
 	inRound.Name = "InRound"
 	inRound.Value = false
 	
-	local hp = Instance.new("IntValue", playerVar)
+	local hp = Instance.new("NumberValue", playerVar)
 	hp.Name = "Health"
 	hp.Value = 100
 	
-	local maxHp = Instance.new("IntValue", playerVar)
+	local maxHp = Instance.new("NumberValue", playerVar)
 	maxHp.Name = "MaxHealth"
 	maxHp.Value = 100
 	
-	local stm = Instance.new("IntValue", playerVar)
+	local stm = Instance.new("NumberValue", playerVar)
 	stm.Name = "Stamina"
 	stm.Value = 100
 	
-	local maxStm = Instance.new("IntValue", playerVar)
+	local maxStm = Instance.new("NumberValue", playerVar)
 	maxStm.Name = "MaxStamina"
 	maxStm.Value = 100
 	
-	local wlkSpd = Instance.new("IntValue", playerVar)
+	local wlkSpd = Instance.new("NumberValue", playerVar)
 	wlkSpd.Name = "WalkSpeed"
 	wlkSpd.Value = 10
 	
-	local runSpd = Instance.new("IntValue", playerVar)
+	local runSpd = Instance.new("NumberValue", playerVar)
 	runSpd.Name = "RunSpeed"
 	runSpd.Value = 26
 	
