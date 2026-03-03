@@ -6,7 +6,21 @@ local player = game.Players.LocalPlayer
 local stamina = player.PlayerAttributes.Stamina
 local maxStamina = player.PlayerAttributes.MaxStamina
 
-bg.Visible = true
+local replicatedStorage = game.ReplicatedStorage
+local intermission = replicatedStorage.TimerFires.BeginIntermission
+local round = replicatedStorage.TimerFires.BeginRound
+
+bg.Visible = false
+
+round.OnClientEvent:Connect(function()
+	task.wait(1)
+	bg.Visible = true
+end)
+
+intermission.OnClientEvent:Connect(function()
+	task.wait(1)
+	bg.Visible = false
+end)
 
 while true do
 	bar.Size = UDim2.new(stamina.Value / maxStamina.Value, 0, 1, 0)
