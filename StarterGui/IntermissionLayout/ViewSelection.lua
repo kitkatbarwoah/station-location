@@ -10,9 +10,9 @@ local selectionInformation = selection.SelectionInformation
 local replicatedStorage = game.ReplicatedStorage
 local intermission = replicatedStorage.TimerFires.BeginIntermission
 local round = replicatedStorage.TimerFires.BeginRound
-local closeTabs = replicatedStorage.LocalFires.CloseTabs
 
 local idTab = "Selection"
+local guiFunctions = require(replicatedStorage.ModuleScripts.GuiFunctions)
 
 local player = game.Players.LocalPlayer
 local selectedCharacter = player.PlayerAttributes.SelectedCharacterName
@@ -39,12 +39,9 @@ end)
 
 selectionButton.MouseButton1Click:Connect(function()
 	if selectionMenu.Visible == false then
-		selectionMenu.Visible = true
-		selectionDisplay.Visible = true
+		guiFunctions.closeTabs(idTab)
 	else
-		selectionMenu.Visible = false
-		selectionDisplay.Visible = false
-		selectionInformation.Visible = false
+		guiFunctions.closeTabs(nil)
 	end
 end)
 
