@@ -1,10 +1,15 @@
-local settings = script.Parent
-local settingsMenu = settings.SettingsMenu
-local settingsButton = settings.SettingsButton
+local gameSettings = script.Parent
+local settingsMenu = gameSettings.SettingsMenu
+local settingsButton = gameSettings.SettingsButton
 
 local replicatedStorage = game.ReplicatedStorage
 local intermission = replicatedStorage.TimerFires.BeginIntermission
 local round = replicatedStorage.TimerFires.BeginRound
+
+local idTab = "Settings"
+local guiFunctions = require(replicatedStorage.ModuleScripts.GuiFunctions)
+
+local player = game.Players.LocalPlayer
 
 settingsMenu.Visible = false
 settingsButton.Visible = true
@@ -20,8 +25,8 @@ end)
 
 settingsButton.MouseButton1Click:Connect(function()
 	if settingsMenu.Visible == false then
-		settingsMenu.Visible = true
+		guiFunctions.closeTabs(idTab)
 	else
-		settingsMenu.Visible = false
+		guiFunctions.closeTabs(nil)
 	end
 end)
