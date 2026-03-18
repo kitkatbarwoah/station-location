@@ -7,7 +7,7 @@ local round = replicatedStorage.TimerFires.BeginRound
 
 local function roundClock(startingTime)
 	time.Value = startingTime
-	while time.Value >= 0 do
+	while time.Value > 0 do
 		time.Value -= 1
 		task.wait(1)
 		print(time.Value)
@@ -20,7 +20,7 @@ while true do
 	roundClock(15) -- short for now for testing purposes, will be extended to 45 seconds before final version
 	round:FireAllClients()
 	roundInProgress.Value = true
-	task.wait(2)
+	task.wait(1)
 	roundClock(210)
-	task.wait(2)
+	task.wait(1)
 end
