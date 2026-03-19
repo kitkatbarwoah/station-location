@@ -23,17 +23,23 @@ local doctorButton = selectionMenu.DoctorButton
 local guardianButton = selectionMenu.GuardianButton
 local knightButton = selectionMenu.KnightButton
 
+local inRound = player.PlayerAttributes.InRound
+
 selectionMenu.Visible = false
 selectionButton.Visible = true
 
 round.OnClientEvent:Connect(function()
-	selectionMenu.Visible = false
-	selectionButton.Visible = false
-	selectionDisplay.Visible = false
-	selectionInformation.Visible = false
+	task.wait(1)
+	if inRound.Value == true then
+		selectionMenu.Visible = false
+		selectionButton.Visible = false
+		selectionDisplay.Visible = false
+		selectionInformation.Visible = false
+	end
 end)
 
 intermission.OnClientEvent:Connect(function()
+	task.wait(1)
 	selectionButton.Visible = true
 end)
 
