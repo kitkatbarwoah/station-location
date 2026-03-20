@@ -10,11 +10,15 @@ local replicatedStorage = game.ReplicatedStorage
 local intermission = replicatedStorage.TimerFires.BeginIntermission
 local round = replicatedStorage.TimerFires.BeginRound
 
+local inRound = player.PlayerAttributes.InRound
+
 bg.Visible = false
 
 round.OnClientEvent:Connect(function()
 	task.wait(1)
-	bg.Visible = true
+	if inRound.Value == true then
+		bg.Visible = true
+	end
 end)
 
 intermission.OnClientEvent:Connect(function()

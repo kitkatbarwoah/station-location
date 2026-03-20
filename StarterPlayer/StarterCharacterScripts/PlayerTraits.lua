@@ -9,12 +9,30 @@ local maxStamina = player.PlayerAttributes.MaxStamina
 local maxHealth = player.PlayerAttributes.MaxHealth
 local walkSpeed = player.PlayerAttributes.WalkSpeed
 local runSpeed = player.PlayerAttributes.RunSpeed
+local inRound = player.PlayerAttributes.InRound
+local afkMode = player.PlayerAttributes.AfkMode
 
 local sprinting = false
 local regenStamina = true
 
 local shiftRegen = false
 local holdingShift = false
+
+local replicatedStorage = game.ReplicatedStorage
+local intermission = replicatedStorage.TimerFires.BeginIntermission
+local round = replicatedStorage.TimerFires.BeginRound
+
+round.OnClientEvent:Connect(function()
+	if afkMode.Value == false then
+		inRound.Value = true
+	else
+		inRound.Value = false
+	end
+end)
+
+intermission.OnClientEvent:Connect(function()
+	inRound = false
+end)
 
 --[[
  checks if the user has enough stamina to sprint, then changes 

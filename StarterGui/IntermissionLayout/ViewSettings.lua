@@ -21,17 +21,27 @@ local maliceButton = settingsButtons.MaliceCheck
 local afkButton = settingsButtons.AfkCheck
 local hitboxesButton = settingsButtons.HitboxesCheck
 
+local afkIndicator = gameSettings.AfkIndicator
+
+local inRound = player.PlayerAttributes.InRound
+
 --local bass = settingsMenu.Bass
 
 settingsMenu.Visible = false
 settingsButton.Visible = true
 
 round.OnClientEvent:Connect(function()
-	settingsMenu.Visible = false
-	settingsButton.Visible = false
+	task.wait(1)
+	print("happens")
+	if inRound.Value == true then
+		settingsMenu.Visible = false
+		settingsButton.Visible = false
+		print("oh")
+	end
 end)
 
 intermission.OnClientEvent:Connect(function()
+	task.wait(1)
 	settingsButton.Visible = true
 end)
 
@@ -57,9 +67,11 @@ afkButton.MouseButton1Click:Connect(function()
 	if afkMode.Value == false then
 		afkMode.Value = true
 		afkButton.Image = "rbxassetid://82700746510321"
+		afkIndicator.Visible = true
 	else
 		afkMode.Value = false
 		afkButton.Image = "rbxassetid://98354154174040"
+		afkIndicator.Visible = false
 	end
 end)
 
