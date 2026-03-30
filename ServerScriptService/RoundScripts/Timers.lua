@@ -13,6 +13,8 @@ local malice = 0
 local highestMalice = 0
 local nextJuggernaut = 0
 
+local selectedJuggernaut = replicatedStorage.ServerVariables.SelectedJuggernaut
+
 local function roundClock(startingTime)
 	time.Value = startingTime
 	while time.Value > 0 do
@@ -33,7 +35,7 @@ while true do
 			continue
 		end
 		player.PlayerAttributes.Team.Value = "Survivor"
-		malice = player.leaderstats.Malice.Value
+		malice = player.PlayerAttributes.Malice.Value
 		if malice >= highestMalice then
 			highestMalice = malice
 			nextJuggernaut = player
@@ -42,11 +44,11 @@ while true do
 	end
 	nextJuggernaut.PlayerAttributes.Team.Value = "Juggernaut"
 	nextJuggernaut.PlayerAttributes.Malice.Value = 0
+	selectedJuggernaut.Value = nextJuggernautName
+	wait(1)
 	pickTeams:FireAllClients()
 	print(nextJuggernautName .. " is the next juggernaut")
-	
 	roundInProgress.Value = true
-	task.wait(1)
 	roundClock(210)
 	task.wait(1)
 end
