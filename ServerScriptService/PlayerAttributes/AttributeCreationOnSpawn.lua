@@ -1,7 +1,14 @@
+local dataStoreService = game:GetService("DataStoreService")
+local playerStats = dataStoreService:GetDataStore("PlayerStats")
+local playerMalice = dataStoreService:GetDataStore("PlayerStats", "Malice")
+local playerCurrency = dataStoreService:GetDataStore("PlayerStats", "Currency")
+local playerSettings = dataStoreService:GetDataStore("PlayerStats", "Settings")
+
 game.Players.PlayerAdded:Connect(function(player)
 	
 	local playerVar = Instance.new("Folder", player)
 	playerVar.Name = "PlayerAttributes"
+	playerVar.Parent = player
 	
 	--[[
 	These are default values upon joining in game. Many of these attributes
@@ -30,10 +37,87 @@ game.Players.PlayerAdded:Connect(function(player)
 	
 	local wlkSpd = Instance.new("NumberValue", playerVar)
 	wlkSpd.Name = "WalkSpeed"
-	wlkSpd.Value = 10
+	wlkSpd.Value = 12
 	
 	local runSpd = Instance.new("NumberValue", playerVar)
 	runSpd.Name = "RunSpeed"
-	runSpd.Value = 26
+	runSpd.Value = 29
+	
+	--[[
+	Stats that will be saved across games
+	]]--
+	
+	local leaderstats = Instance.new("Folder", player)
+	leaderstats.Name = "leaderstats"
+	leaderstats.Parent = player
+	
+	local money = Instance.new("IntValue", playerVar)
+	money.Name = "Currency"
+	money.Value = 0
+	
+	local malice = Instance.new("IntValue", playerVar)
+	malice.Name = "Malice"
+	malice.Value = 0
+	
+	--[[local success, currentMalice = pcall(function()
+		return playerMalice:GetAsync(player.UserId)
+	end)
+	if success then
+		malice.Value = currentMalice
+	else
+		malice.Value = 0
+	end
+	
+	local success, currentCurrency = pcall(function()
+		return playerCurrency:GetAsync(player.UserId)
+	end)
+	if success then
+		money.Value = currentCurrency
+	else
+		money.Value = 0
+	end]]
+	
+	local selected = Instance.new("StringValue", playerVar)
+	selected.Name = "SelectedCharacter"
+	selected.Value = "None"
+	
+	local selectedName = Instance.new("StringValue", playerVar)
+	selectedName.Name = "SelectedCharacterName"
+	selectedName.Value = "None"
+	
+	local equippedName = Instance.new("StringValue", playerVar)
+	equippedName.Name = "EquippedCharacterName"
+	equippedName.Value = "None"
+	
+	local team = Instance.new("StringValue", playerVar)
+	team.Name = "Team"
+	team.Value = "Lobby"
+	
+	--settings
+	
+	local maliceGain = Instance.new("BoolValue", playerVar)
+	maliceGain.Name = "MaliceGain"
+	maliceGain.Value = true
+	
+	local afkMode = Instance.new("BoolValue", playerVar)
+	afkMode.Name = "AfkMode"
+	afkMode.Value = false
+	
+	local hitboxesEnabled = Instance.new("BoolValue", playerVar)
+	hitboxesEnabled.Name = "HitboxesEnabled"
+	hitboxesEnabled.Value = false
+	
+	local settingsArray = Instance.new("BoolValue", playerVar)
+	settingsArray.Name = "SettingsArray"
+	settingsArray.Value = {true, false, false}
+	
+	--[[local success, currentSettings = pcall(function()
+		return playerSettings:GetAsync(player.UserID)
+	end)
+	if success then
+		settingsArray = currentSettings
+	else
+		settingsArray = {true, false, false}
+	end]]
 	
 end)
