@@ -11,6 +11,7 @@ local walkSpeed = player.PlayerAttributes.WalkSpeed
 local runSpeed = player.PlayerAttributes.RunSpeed
 local inRound = player.PlayerAttributes.InRound
 local afkMode = player.PlayerAttributes.AfkMode
+local stmDrain = player.PlayerAttributes.StaminaDrain
 
 local sprinting = false
 local regenStamina = true
@@ -21,6 +22,7 @@ local holdingShift = false
 local replicatedStorage = game.ReplicatedStorage
 local intermission = replicatedStorage.TimerFires.BeginIntermission
 local round = replicatedStorage.TimerFires.BeginRound
+local updateSpeed = replicatedStorage.LocalFires.UpdateSpeed
 
 round.OnClientEvent:Connect(function()
 	if afkMode.Value == false then
@@ -32,6 +34,14 @@ end)
 
 intermission.OnClientEvent:Connect(function()
 	inRound = false
+end)
+
+updateSpeed.Event:Connect(function()
+	if sprinting == true then
+		humanoid.WalkSpeed = runSpeed.Value
+	elseif sprinting == false then
+		humanoid.WalkSpeed = walkSpeed.Value
+	end
 end)
 
 --[[
