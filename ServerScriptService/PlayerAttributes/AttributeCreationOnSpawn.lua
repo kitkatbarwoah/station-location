@@ -43,6 +43,10 @@ game.Players.PlayerAdded:Connect(function(player)
 	runSpd.Name = "RunSpeed"
 	runSpd.Value = 29
 	
+	local stmDrain = Instance.new("BoolValue", playerVar)
+	stmDrain.Name = "StaminaDrain"
+	stmDrain.Value = true
+	
 	--[[
 	Stats that will be saved across games
 	]]--
@@ -87,11 +91,47 @@ game.Players.PlayerAdded:Connect(function(player)
 	
 	local equippedName = Instance.new("StringValue", playerVar)
 	equippedName.Name = "EquippedCharacterName"
-	equippedName.Value = "None"
+	equippedName.Value = "Default"
+	
+	local equippedJuggernaut = Instance.new("StringValue", playerVar)
+	equippedJuggernaut.Name = "EquippedJuggernautName"
+	equippedJuggernaut.Value = "Butcher"
 	
 	local team = Instance.new("StringValue", playerVar)
 	team.Name = "Team"
 	team.Value = "Lobby"
+	
+	local cooldown1 = Instance.new("NumberValue", playerVar)
+	cooldown1.Name = "Cooldown1"
+	cooldown1.Value = 0
+	
+	local cooldown2 = Instance.new("NumberValue", playerVar)
+	cooldown2.Name = "Cooldown2"
+	cooldown2.Value = 0
+	
+	local cooldown3 = Instance.new("NumberValue", playerVar)
+	cooldown3.Name = "Cooldown3"
+	cooldown3.Value = 0
+	
+	local cooldown4 = Instance.new("NumberValue", playerVar)
+	cooldown4.Name = "Cooldown4"
+	cooldown4.Value = 0
+	
+	local cooldown1max = Instance.new("NumberValue", playerVar)
+	cooldown1max.Name = "Cooldown1Max"
+	cooldown1max.Value = 1
+	
+	local cooldown2max = Instance.new("NumberValue", playerVar)
+	cooldown2max.Name = "Cooldown2Max"
+	cooldown2max.Value = 1
+	
+	local cooldown3max = Instance.new("NumberValue", playerVar)
+	cooldown3max.Name = "Cooldown3Max"
+	cooldown3max.Value = 1
+	
+	local cooldown4max = Instance.new("NumberValue", playerVar)
+	cooldown4max.Name = "Cooldown4Max"
+	cooldown4max.Value = 1
 	
 	--settings
 	
@@ -107,9 +147,9 @@ game.Players.PlayerAdded:Connect(function(player)
 	hitboxesEnabled.Name = "HitboxesEnabled"
 	hitboxesEnabled.Value = false
 	
-	local settingsArray = Instance.new("BoolValue", playerVar)
+	--[[local settingsArray = Instance.new("BoolValue", playerVar)
 	settingsArray.Name = "SettingsArray"
-	settingsArray.Value = {true, false, false}
+	settingsArray.Value = {true, false, false}]]
 	
 	--[[local success, currentSettings = pcall(function()
 		return playerSettings:GetAsync(player.UserID)

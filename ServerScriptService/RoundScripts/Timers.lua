@@ -26,7 +26,7 @@ end
 while true do
 	intermission:FireAllClients()
 	roundInProgress.Value = false
-	roundClock(15) -- short for now for testing purposes, will be extended to 45 seconds before final version
+	roundClock(30) -- short for now for testing purposes, will be extended to 45 seconds before final version
 	round:FireAllClients()
 	
 	players = game.Players:GetPlayers()

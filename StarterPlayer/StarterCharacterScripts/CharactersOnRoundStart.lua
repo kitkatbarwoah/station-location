@@ -13,6 +13,11 @@ local walkSpeed = player.PlayerAttributes.WalkSpeed
 local runSpeed = player.PlayerAttributes.RunSpeed
 local inRound = player.PlayerAttributes.InRound
 
+local cooldown1max = player.PlayerAttributes.Cooldown1Max
+local cooldown2max = player.PlayerAttributes.Cooldown2Max
+local cooldown3max = player.PlayerAttributes.Cooldown3Max
+local cooldown4max = player.PlayerAttributes.Cooldown4Max
+
 local survivorSpawn = game.Workspace:WaitForChild("SurvivorSpawn")
 local juggernautSpawn = game.Workspace:WaitForChild("JuggernautSpawn")
 
@@ -27,6 +32,8 @@ pickTeams.OnClientEvent:Connect(function()
 			maxHealth.Value = 100
 			walkSpeed.Value = 12
 			runSpeed.Value = 29
+			cooldown2max.Value = 40
+			cooldown3max.Value = 35
 
 		elseif team.Value == "Juggernaut" then
 			character:MoveTo(juggernautSpawn.Position + Vector3.new(math.random(-3, 3), 5, math.random(-3, 3)))
@@ -36,10 +43,13 @@ pickTeams.OnClientEvent:Connect(function()
 			maxStamina.Value = 120
 			maxHealth.Value = 900
 			walkSpeed.Value = 6
-			runSpeed.Value = 32
+			runSpeed.Value = 33
+			cooldown1max.Value = 1.5
+			cooldown2max.Value = 15
+			cooldown3max.Value = 12
+			cooldown4max.Value = 20
 			
 		end
 		humanoid.WalkSpeed = walkSpeed.Value
-		print(team.Value)
 	end
 end)
