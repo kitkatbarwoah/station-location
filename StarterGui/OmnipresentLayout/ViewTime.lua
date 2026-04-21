@@ -1,9 +1,12 @@
 local replicatedStorage = game.ReplicatedStorage
 local intermission = replicatedStorage.TimerFires.BeginIntermission
 local round = replicatedStorage.TimerFires.BeginRound
+local quota = replicatedStorage.ServerVariables.Quota
+local quotaProgress = replicatedStorage.ServerVariables.QuotaProgress
 
 local stateIndicator = script.Parent.StateIndicator
 local timeLeft = script.Parent.TimeLeft
+local quotaIndicator = script.Parent.QuotaIndicator
 local time = replicatedStorage.ServerVariables.Timer
 local roundInProgress = replicatedStorage.ServerVariables.RoundInProgress
 
@@ -36,7 +39,10 @@ while true do
 	end
 	if roundInProgress.Value == true then
 		stateIndicator.Text = "Round ends in:"
+		quotaIndicator.Visible = true
+		quotaIndicator.Text = quotaProgress.Value .. "/" .. quota.Value .. " Eliminations"
 	else
 		stateIndicator.Text = "Round begins in:"
+		quotaIndicator.Visible = false
 	end
 end
