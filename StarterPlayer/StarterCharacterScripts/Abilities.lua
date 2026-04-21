@@ -1,4 +1,5 @@
 local userInputService = game:GetService("UserInputService")
+local heartbeat = game:GetService("RunService").Heartbeat
 local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
@@ -82,7 +83,7 @@ local function ability1()
 						dmgDealt = true
 					end
 				end)
-				task.wait(0.0167)
+				heartbeat:Wait()
 				hitboxClone:Destroy()
 			end
 			task.wait(0.2)
@@ -122,7 +123,7 @@ local function ability2()
 						dmgDealt = true
 					end
 				end)
-				task.wait(0.0167)
+				heartbeat:Wait()
 				hitboxClone:Destroy()
 			end
 			stmDrain.Value = true
@@ -212,7 +213,7 @@ local function ability3()
 						dmgDealt = true
 					end
 				end)
-				task.wait(0.0167)
+				heartbeat:Wait()
 				hitboxClone:Destroy()
 			end
 
