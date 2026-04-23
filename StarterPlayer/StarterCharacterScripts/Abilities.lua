@@ -97,17 +97,17 @@ local function ability2()
 		if equippedJuggernaut.Value == "Butcher" then
 			cooldown2.Value = 15
 			dmg = 25
-			walkSpeed.Value = 0
-			runSpeed.Value = 0
+			walkSpeed.Value = 0.01
+			runSpeed.Value = 0.01
 			updateSpeed:Fire()
 			animTrack2:Play()
 			task.wait(0.65)
-			local initialDirection = humanoid.RootPart.CFrame.LookVector * Vector3.new(1, 0, 1)
+			local initialDirection = humanoid.RootPart.CFrame.LookVector * Vector3.new(1.5, 0, 1.5)
 			
 			stmDrain.Value = false
-			for i = 1, 50 do
-				if i < 30 then
-					character:MoveTo(character.Head.Position + initialDirection * ((-i+30) * 0.2))
+			for i = 1, 30 do
+				if i < 20 then
+					character:PivotTo(character:GetPivot() + initialDirection * ((-i+20) * 0.2) + Vector3.new(0, -i+15, 0))
 				end
 				local hitboxClone = hitbox:Clone()
 				hitboxClone.Parent = workspace
