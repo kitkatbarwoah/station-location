@@ -80,12 +80,14 @@ local function ability1()
 				hitboxClone.CFrame *= CFrame.new(0, 1, -4.5)
 				hitboxClone.CFrame *= CFrame.Angles(0, math.rad(90), 0)
 				hitboxClone.Touched:Connect(function(hit)
-					if hit.Parent:FindFirstChild("Humanoid") and hit.Parent:FindFirstChild("Humanoid") ~= character:FindFirstChild("Humanoid") and dmgDealt == false then
-						print("happens")
-						dmgDealt = false
-						hit.Parent:FindFirstChild("Humanoid"):TakeDamage(dmg)
-						dmg = 0
-						dmgDealt = true
+					local hitboxContacts = hitboxClone:GetTouchingParts()
+					for _, contact in ipairs(hitboxContacts) do
+						if contact.Parent:FindFirstChild("Humanoid") and contact.Parent:FindFirstChild("Humanoid") ~= character:FindFirstChild("Humanoid") and dmgDealt == false then
+							dmgDealt = false
+							contact.Parent:FindFirstChild("Humanoid"):TakeDamage(dmg)
+							dmg = 0
+							dmgDealt = true
+						end
 					end
 				end)
 				heartbeat:Wait()
@@ -109,24 +111,25 @@ local function ability2()
 			task.wait(0.65)
 			local initialDirection = humanoid.RootPart.CFrame.LookVector * Vector3.new(0.4, 0, 0.4)
 			local i = 0
-			print(initialDirection)
 
 			stmDrain.Value = false
 			while humanoid.FloorMaterial == Enum.Material.Air or i < 10 do
-				character:PivotTo(character:GetPivot() + initialDirection * 6 + Vector3.new(0, (-i+50)/50, 0))
-				print("happens")
+				character:PivotTo(character:GetPivot() + initialDirection * 6 + Vector3.new(0, (-i+40)/13, 0))
 				local hitboxClone = hitbox:Clone()
 				hitboxClone.Parent = workspace
-				hitboxClone.Size = Vector3.new(4, 9, 12)
+				hitboxClone.Size = Vector3.new(8, 9, 12)
 				hitboxClone.CFrame = humanoid.RootPart.CFrame
 				hitboxClone.CFrame *= CFrame.new(0, 0, 0)
 				hitboxClone.CFrame *= CFrame.Angles(0, math.rad(90), 0)
 				hitboxClone.Touched:Connect(function(hit)
-					if hit.Parent:FindFirstChild("Humanoid") and hit.Parent:FindFirstChild("Humanoid") ~= character:FindFirstChild("Humanoid") and dmgDealt == false then
-						dmgDealt = false
-						hit.Parent:FindFirstChild("Humanoid"):TakeDamage(dmg)
-						dmg = 0
-						dmgDealt = true
+					local hitboxContacts = hitboxClone:GetTouchingParts()
+					for _, contact in ipairs(hitboxContacts) do
+						if contact.Parent:FindFirstChild("Humanoid") and contact.Parent:FindFirstChild("Humanoid") ~= character:FindFirstChild("Humanoid") and dmgDealt == false then
+							dmgDealt = false
+							contact.Parent:FindFirstChild("Humanoid"):TakeDamage(dmg)
+							dmg = 0
+							dmgDealt = true
+						end
 					end
 				end)
 				heartbeat:Wait()
@@ -141,10 +144,12 @@ local function ability2()
 				fragmentClone.Size = Vector3.new(fragmentSize, fragmentSize, fragmentSize)
 				fragmentClone.CFrame = humanoid.RootPart.CFrame
 				fragmentClone.CFrame *= CFrame.Angles(0, math.rad(math.random(0, 360)), 0)
-				fragmentClone.CFrame *= CFrame.new(math.random(-9, 9), 0, math.random(-9, 9))
+				fragmentClone.CFrame *= CFrame.new(math.random(-9, 9), -4, math.random(-9, 9))
 				fragment.AssemblyLinearVelocity = Vector3.new(math.random(-50, 50), math.random(35, 75), math.random(-50, 50))
 				fragment.AssemblyAngularVelocity = Vector3.new(math.random(-10, 10), math.random(-10, 10), math.random(-10, 10))
 				task.delay(0.25, function()
+					fragmentClone.CanCollide = true
+					task.wait(1)
 					for k = 1, 30 do
 						fragmentClone.Transparency = (k)/30
 						heartbeat:Wait()
@@ -154,6 +159,10 @@ local function ability2()
 			end
 			
 			animTrack4:Play()
+			
+			dmg = 25
+			dmgDealt = false
+			
 			for j = 1, 6 do
 				local hitboxClone = hitbox:Clone()
 				hitboxClone.Parent = workspace
@@ -162,11 +171,14 @@ local function ability2()
 				hitboxClone.CFrame *= CFrame.new(0, -1, 0)
 				hitboxClone.CFrame *= CFrame.Angles(0, math.rad(90), 0)
 				hitboxClone.Touched:Connect(function(hit)
-					if hit.Parent:FindFirstChild("Humanoid") and hit.Parent:FindFirstChild("Humanoid") ~= character:FindFirstChild("Humanoid") and dmgDealt == false then
-						dmgDealt = false
-						hit.Parent:FindFirstChild("Humanoid"):TakeDamage(dmg)
-						dmg = 0
-						dmgDealt = true
+					local hitboxContacts = hitboxClone:GetTouchingParts()
+					for _, contact in ipairs(hitboxContacts) do
+						if contact.Parent:FindFirstChild("Humanoid") and contact.Parent:FindFirstChild("Humanoid") ~= character:FindFirstChild("Humanoid") and dmgDealt == false then
+							dmgDealt = false
+							contact.Parent:FindFirstChild("Humanoid"):TakeDamage(dmg)
+							dmg = 0
+							dmgDealt = true
+						end
 					end
 				end)
 				heartbeat:Wait()
@@ -227,6 +239,7 @@ local function ability3()
 			task.wait(0.5)
 			character.Weapon.Handle.Transparency = 1
 			local originalCFrame = humanoid.RootPart.CFrame
+			local projectileDestroyed = false
 
 			for i = 1, 120 do
 				if i == 20 then
@@ -243,20 +256,46 @@ local function ability3()
 				local swordClone = replicatedStorage.Assets["Butcher Sword"]:Clone()
 				swordClone.Parent = hitboxClone
 				swordClone.CFrame = originalCFrame
-				swordClone.CFrame *= CFrame.new(0, 1, -3 - (i*1.5))
-				swordClone.CFrame *= CFrame.Angles(i * 0.5, 0, 0)
+				swordClone.CFrame *= CFrame.new(0, 1, -4.5 - (i*1.25))
+				swordClone.CFrame *= CFrame.Angles(i * -0.4, 0, 0)
 				swordClone.Transparency = 0
 				hitboxClone.Parent = workspace
-				hitboxClone.Size = Vector3.new(4, 4, 3)
+				hitboxClone.Size = Vector3.new(4, 4, 4)
 				hitboxClone.CFrame = originalCFrame
-				hitboxClone.CFrame *= CFrame.new(0, 1, -3 - (i*1.5))
+				hitboxClone.CFrame *= CFrame.new(0, 1, -4.5 - (i*1.25))
 				hitboxClone.CFrame *= CFrame.Angles(0, math.rad(90), 0)
 				hitboxClone.Touched:Connect(function(hit)
-					if hit.Parent:FindFirstChild("Humanoid") and hit.Parent:FindFirstChild("Humanoid") ~= character:FindFirstChild("Humanoid") and dmgDealt == false then
-						dmgDealt = false
-						hit.Parent:FindFirstChild("Humanoid"):TakeDamage(dmg)
-						dmg = 0
-						dmgDealt = true
+					local hitboxContacts = hitboxClone:GetTouchingParts()
+					for _, contact in ipairs(hitboxContacts) do
+						if contact.Parent:FindFirstChild("Humanoid") and contact.Parent:FindFirstChild("Humanoid") ~= character:FindFirstChild("Humanoid") and dmgDealt == false then
+							dmgDealt = false
+							contact.Parent:FindFirstChild("Humanoid"):TakeDamage(dmg)
+							dmg = 0
+							dmgDealt = true
+							
+							--damage effect
+							for j = 1, math.random(3, 6) do
+								local fragmentClone = fragment:Clone()
+								fragmentClone.Parent = workspace
+								local fragmentSize = math.random(2, 5)/10
+								fragmentClone.Size = Vector3.new(fragmentSize, fragmentSize, fragmentSize)
+								fragmentClone.BrickColor = BrickColor.new("Bright red")
+								fragmentClone.CFrame = contact.Parent:FindFirstChild("Humanoid").RootPart.CFrame
+								fragmentClone.CFrame *= CFrame.Angles(0, math.rad(math.random(0, 360)), 0)
+								fragmentClone.CFrame *= CFrame.new(math.random(-1, 1), math.random(-1, 1), math.random(-1, 1))
+								fragment.AssemblyLinearVelocity = Vector3.new(math.random(-15, 15), math.random(25, 65), math.random(-15, 15))
+								fragment.AssemblyAngularVelocity = Vector3.new(math.random(-10, 10), math.random(-10, 10), math.random(-10, 10))
+								task.delay(0.25, function()
+									fragmentClone.CanCollide = true
+									task.wait(1)
+									for k = 1, 30 do
+										fragmentClone.Transparency = (k)/30
+										heartbeat:Wait()
+									end
+									fragmentClone:Destroy()
+								end)
+							end
+						end
 					end
 				end)
 				heartbeat:Wait()
@@ -312,7 +351,6 @@ userInputService.InputBegan:Connect(function(input)
 end)
 
 while true do
-	--task.wait(cooldownInterval)
 	heartbeat:Wait()
 	if cooldown1.Value > 0 then
 		cooldown1.Value -= cooldownInterval
