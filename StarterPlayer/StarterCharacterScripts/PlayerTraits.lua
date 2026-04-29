@@ -23,6 +23,7 @@ local replicatedStorage = game.ReplicatedStorage
 local intermission = replicatedStorage.TimerFires.BeginIntermission
 local round = replicatedStorage.TimerFires.BeginRound
 local updateSpeed = replicatedStorage.LocalFires.UpdateSpeed
+local playerDeath = replicatedStorage.CharacterFires.PlayerDeath
 
 round.OnClientEvent:Connect(function()
 	if afkMode.Value == false then
@@ -140,6 +141,11 @@ while true do
 	--set a player's true health to 0 if they have 0 health
 	if health.Value <= 0 then
 		humanoid.Health = 0
+	end
+	
+	--able to check when a player is dead both while in game and while resetting
+	if humanoid.Health <= 0 then
+		playerDeath:FireServer(player)
 	end
 	
 	-- since stamina is lost and gained in different increments, this statement removes any extra stamina a player may get

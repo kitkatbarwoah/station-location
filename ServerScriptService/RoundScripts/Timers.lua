@@ -5,6 +5,11 @@ local roundInProgress = replicatedStorage.ServerVariables.RoundInProgress
 local intermission = replicatedStorage.TimerFires.BeginIntermission
 local round = replicatedStorage.TimerFires.BeginRound
 local pickTeams = replicatedStorage.TimerFires.PickTeams
+local increaseTime = replicatedStorage.TimerFires.IncreaseTime
+local prematurelyEndGame = replicatedStorage.TimerFires.PrematurelyEndGame
+
+local quota = replicatedStorage.ServerVariables.Quota
+local quotaProgress = replicatedStorage.ServerVariables.QuotaProgress
 
 local quota = replicatedStorage.ServerVariables.Quota
 local quotaProgress = replicatedStorage.ServerVariables.QuotaProgress
@@ -26,6 +31,17 @@ local function roundClock(startingTime)
 		task.wait(1)
 	end
 end
+
+increaseTime.Event:Connect(function(increase)
+	for i = 1, increase do
+		time.Value += 1
+		task.wait(0.2/(increase-i))
+	end
+end)
+
+prematurelyEndGame.Event:Connect(function()
+	time.Value = 0
+end)
 
 while true do
 	intermission:FireAllClients()
