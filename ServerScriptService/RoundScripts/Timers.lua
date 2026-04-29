@@ -6,12 +6,16 @@ local intermission = replicatedStorage.TimerFires.BeginIntermission
 local round = replicatedStorage.TimerFires.BeginRound
 local pickTeams = replicatedStorage.TimerFires.PickTeams
 
+local quota = replicatedStorage.ServerVariables.Quota
+local quotaProgress = replicatedStorage.ServerVariables.QuotaProgress
+
 local player = game.Players.LocalPlayer
 local players = game.Players:GetPlayers()
 local team = ""
 local malice = 0
 local highestMalice = 0
 local nextJuggernaut = 0
+local survivorCount = 0
 
 local selectedJuggernaut = replicatedStorage.ServerVariables.SelectedJuggernaut
 
@@ -26,14 +30,18 @@ end
 while true do
 	intermission:FireAllClients()
 	roundInProgress.Value = false
-	roundClock(30) -- short for now for testing purposes, will be extended to 45 seconds before final version
+	roundClock(10) -- short for now for testing purposes, will be extended to 45 seconds before final version
 	round:FireAllClients()
 	
+	quota.Value = 0
+	quotaProgress.Value = 0
+	survivorCount = 0
 	players = game.Players:GetPlayers()
 	for _, player in ipairs(players) do
 		if player.PlayerAttributes.AfkMode.Value == true then
 			continue
 		end
+		survivorCount += 1
 		player.PlayerAttributes.Team.Value = "Survivor"
 		malice = player.PlayerAttributes.Malice.Value
 		if malice >= highestMalice then
@@ -42,6 +50,8 @@ while true do
 			nextJuggernautName = player.Name
 		end
 	end
+	survivorCount -= 1
+	quota.Value = math.round(survivorCount * 2 / 3)
 	nextJuggernaut.PlayerAttributes.Team.Value = "Juggernaut"
 	nextJuggernaut.PlayerAttributes.Malice.Value = 0
 	selectedJuggernaut.Value = nextJuggernautName
@@ -49,6 +59,6 @@ while true do
 	pickTeams:FireAllClients()
 	print(nextJuggernautName .. " is the next juggernaut")
 	roundInProgress.Value = true
-	roundClock(210)
+	roundClock(75 + (survivorCount * 35))
 	task.wait(1)
 end
