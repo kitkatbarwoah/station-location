@@ -147,6 +147,11 @@ game.Players.PlayerAdded:Connect(function(player)
 	hitboxesEnabled.Name = "HitboxesEnabled"
 	hitboxesEnabled.Value = false
 	
+	--player position
+	local charPosition = Instance.new("Vector3Value", playerVar)
+	charPosition.Name = "CharPosition"
+	charPosition.Value = Vector3.new(0, 0, 0)
+	
 	--[[local settingsArray = Instance.new("BoolValue", playerVar)
 	settingsArray.Name = "SettingsArray"
 	settingsArray.Value = {true, false, false}]]
