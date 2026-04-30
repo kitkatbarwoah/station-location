@@ -6,7 +6,6 @@ local player = game.Players.LocalPlayer
 local quota = replicatedStorage.ServerVariables.Quota
 local quotaProgress = replicatedStorage.ServerVariables.QuotaProgress
 
-local charPosition = player.PlayerAttributes.CharPosition
 local juggernautPosition = game.ReplicatedStorage.ServerVariables.JuggernautPosition
 
 playerDeath.OnServerEvent:Connect(function(player)
@@ -15,7 +14,7 @@ playerDeath.OnServerEvent:Connect(function(player)
 	
 	inRound.Value = false
 	if team.Value == "Survivor" then
-		if (charPosition.Value - juggernautPosition.Value).Magnitude < 80 then
+		if (player.PlayerAttributes.CharPosition - juggernautPosition.Value).Magnitude < 150 then
 			quotaProgress += 1
 			increaseTime:Fire(35)
 		else
