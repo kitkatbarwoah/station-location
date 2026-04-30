@@ -2,6 +2,7 @@ local userInputService = game:GetService("UserInputService")
 local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
+local heartbeat = game:GetService("RunService").Heartbeat
 
 local stamina = player.PlayerAttributes.Stamina
 local health = player.PlayerAttributes.Health
@@ -12,6 +13,10 @@ local runSpeed = player.PlayerAttributes.RunSpeed
 local inRound = player.PlayerAttributes.InRound
 local afkMode = player.PlayerAttributes.AfkMode
 local stmDrain = player.PlayerAttributes.StaminaDrain
+local charPosition = player.PlayerAttributes.CharPosition
+local team = player.PlayerAttributes.Team
+
+local juggernautPosition = game.ReplicatedStorage.ServerVariables.JuggernautPosition
 
 local sprinting = false
 local regenStamina = true
@@ -24,6 +29,9 @@ local intermission = replicatedStorage.TimerFires.BeginIntermission
 local round = replicatedStorage.TimerFires.BeginRound
 local updateSpeed = replicatedStorage.LocalFires.UpdateSpeed
 local playerDeath = replicatedStorage.CharacterFires.PlayerDeath
+local chaseProximity = replicatedStorage.LocalFires.ChaseProximity
+
+local chaseLayer = 0
 
 round.OnClientEvent:Connect(function()
 	if afkMode.Value == false then
@@ -99,10 +107,33 @@ userInputService.InputEnded:Connect(function(input)
 	end
 end)
 
+-- chase detector
+
+task.spawn(function()
+	while true do
+		if team.Value == "Survivor" then
+			if math.round((charPosition.Value - juggernautPosition.Value).Magnitude) < 60 then
+				chaseLayer = 4
+			elseif math.round((charPosition.Value - juggernautPosition.Value).Magnitude) < 90 then
+				chaseLayer = 3
+			elseif math.round((charPosition.Value - juggernautPosition.Value).Magnitude) < 120 then
+				chaseLayer = 2
+			elseif math.round((charPosition.Value - juggernautPosition.Value).Magnitude) < 150 then
+				chaseLayer = 1
+			else
+				chaseLayer = 0
+			end
+		chaseProximity:Fire(chaseLayer)
+		end
+		task.wait(0.025)
+	end
+end)
+
 --[[
  this system always runs while a player exists. it calculates
  stamina and health factors based on current scenarios
 ]]
+
 while true do
 	
 	--irons out stamina usage and regeneration with shift and movement key usage
@@ -154,6 +185,15 @@ while true do
 	end
 	
 	-- this is so the system isn't running hundreds of times a second
-	task.wait(0.025)
+
+	for i = 1, 2 do
+		heartbeat:Wait()
+		if inRound.Value == true then
+			charPosition.Value = humanoid.RootPart.Position
+			if team.Value == "Juggernaut" then
+				juggernautPosition.Value = charPosition.Value
+			end
+		end
+	end
 	
 end
