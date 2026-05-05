@@ -2,6 +2,7 @@ local userInputService = game:GetService("UserInputService")
 local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
+local heartbeat = game:GetService("RunService").Heartbeat
 
 local stamina = player.PlayerAttributes.Stamina
 local health = player.PlayerAttributes.Health
@@ -12,6 +13,10 @@ local runSpeed = player.PlayerAttributes.RunSpeed
 local inRound = player.PlayerAttributes.InRound
 local afkMode = player.PlayerAttributes.AfkMode
 local stmDrain = player.PlayerAttributes.StaminaDrain
+local charPosition = player.PlayerAttributes.CharPosition
+local team = player.PlayerAttributes.Team
+
+local juggernautPosition = game.ReplicatedStorage.ServerVariables.JuggernautPosition
 
 local sprinting = false
 local regenStamina = true
@@ -154,6 +159,15 @@ while true do
 	end
 	
 	-- this is so the system isn't running hundreds of times a second
-	task.wait(0.025)
+
+	for i = 1, 3 do
+		heartbeat:Wait()
+		if inRound.Value == true then
+			charPosition.Value = humanoid.RootPart.Position
+			if team.Value == "Juggernaut" then
+				juggernautPosition.Value = charPosition.Value
+			end
+		end
+	end
 	
 end
