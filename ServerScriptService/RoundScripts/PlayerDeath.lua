@@ -15,13 +15,17 @@ playerDeath.OnServerEvent:Connect(function(player)
 	inRound.Value = false
 	if team.Value == "Survivor" then
 		if (player.PlayerAttributes.CharPosition - juggernautPosition.Value).Magnitude < 150 then
-			quotaProgress += 1
-			increaseTime:Fire(35)
+			quotaProgress.Value += 1
+			if quota.Value == quotaProgress.Value then
+				prematurelyEndGame:Fire("JuggernautWin")
+			else
+				increaseTime:Fire(35)
+			end
 		else
 			quota *= math.round(((3/2) - 1) * 2/3)
 		end
 	elseif team.Value == "Juggernaut" then
-		prematurelyEndGame:Fire()
+		prematurelyEndGame:Fire("SurvivorWin")
 	end
 	team.Value = "None"
 end)
