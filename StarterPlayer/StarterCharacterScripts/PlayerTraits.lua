@@ -27,7 +27,7 @@ local holdingShift = false
 local replicatedStorage = game.ReplicatedStorage
 local intermission = replicatedStorage.TimerFires.BeginIntermission
 local round = replicatedStorage.TimerFires.BeginRound
-local updateSpeed = replicatedStorage.LocalFires.UpdateSpeed
+local updateSpeed = replicatedStorage.CharacterFires.UpdateSpeed
 local playerDeath = replicatedStorage.CharacterFires.PlayerDeath
 local chaseProximity = replicatedStorage.LocalFires.ChaseProximity
 
@@ -45,11 +45,13 @@ intermission.OnClientEvent:Connect(function()
 	inRound = false
 end)
 
-updateSpeed.Event:Connect(function()
-	if sprinting == true then
-		humanoid.WalkSpeed = runSpeed.Value
-	elseif sprinting == false then
-		humanoid.WalkSpeed = walkSpeed.Value
+updateSpeed.OnClientEvent:Connect(function(plr)
+	if player == plr then
+		if sprinting == true then
+			humanoid.WalkSpeed = runSpeed.Value
+		elseif sprinting == false then
+			humanoid.WalkSpeed = walkSpeed.Value
+		end
 	end
 end)
 
