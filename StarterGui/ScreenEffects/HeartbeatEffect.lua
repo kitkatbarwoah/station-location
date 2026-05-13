@@ -39,7 +39,9 @@ while true do
 	heartbeatIndicator.Size += UDim2.new(0.05, 0, 0.05, 0)
 	for i = 1, 10 do
 		heartbeatIndicator.Size -= UDim2.new(0.005, 0, 0.005, 0)
-		task.wait(0.025 / previousLayer)
+		if previousLayer ~= 0 then
+			task.wait(0.025 / previousLayer)
+		end
 	end
 	task.wait((1.1 - previousLayer * 0.25))
 end
