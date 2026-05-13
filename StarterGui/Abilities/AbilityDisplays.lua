@@ -9,6 +9,7 @@ local team = player.PlayerAttributes.Team
 local pickTeams = replicatedStorage.TimerFires.PickTeams
 local equippedCharacter = player.PlayerAttributes.EquippedCharacterName
 local equippedJuggernaut = player.PlayerAttributes.EquippedJuggernautName
+local visualReduction = replicatedStorage.CharacterFires.VisualReduction
 
 local cooldown1 = player.PlayerAttributes.Cooldown1
 local cooldown2 = player.PlayerAttributes.Cooldown2
@@ -62,8 +63,25 @@ pickTeams.OnClientEvent:Connect(function()
 	end
 end)
 
+visualReduction.OnClientEvent:Connect(function(plr, abilityno)
+	if plr == player then
+		local affectedAbility = nil
+		if abilityno == 1 then
+			affectedAbility = ability1cooldown
+		elseif abilityno == 2 then
+			affectedAbility = ability2cooldown
+		elseif abilityno == 3 then
+			affectedAbility = ability3cooldown
+		end
+		for i = 1, 30 do
+			affectedAbility.TextColor3 = Color3.fromRGB(255, 255, 165 + i*3)
+			task.wait(1/60)
+		end
+	end
+end)
+
 while true do
-	task.wait(0.1)
+	task.wait(1/60)
 	
 	ability1cooldown.Text = math.ceil(cooldown1.Value * 10) / 10
 	ability2cooldown.Text = math.ceil(cooldown2.Value * 10) / 10
