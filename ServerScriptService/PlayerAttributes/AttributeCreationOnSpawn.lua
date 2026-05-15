@@ -47,6 +47,14 @@ game.Players.PlayerAdded:Connect(function(player)
 	stmDrain.Name = "StaminaDrain"
 	stmDrain.Value = true
 	
+	local speedMult = Instance.new("NumberValue", playerVar)
+	speedMult.Name = "SpeedMult"
+	speedMult.Value = 1
+	
+	local abilitySpeedMult = Instance.new("NumberValue", playerVar)
+	abilitySpeedMult.Name = "AbilitySpeedMult"
+	abilitySpeedMult.Value = 1
+	
 	--[[
 	Stats that will be saved across games
 	]]--
