@@ -48,18 +48,17 @@ function module.butcherLeap(player, cd, damage, windup, forwardPower)
 	local humanoid = character:WaitForChild("Humanoid")
 	local walkSpeed = player.PlayerAttributes.WalkSpeed
 	local runSpeed = player.PlayerAttributes.RunSpeed
+	local abilitySpeedMult = player.PlayerAttributes.AbilitySpeedMult
 	local dmg = damage
 	local dmgDealt = false
 	local i = 0	
-
-	task.wait(windup)
 	
-	walkSpeed.Value = 0.01
-	runSpeed.Value = 0.01
+	abilitySpeedMult.Value = 0.001
 	updateSpeed:FireAllClients(player)
 	
+	task.wait(windup)
+	
 	while humanoid.FloorMaterial == Enum.Material.Air or i < 10 do
-		print(i)
 		i += 1
 		local initialDirection = humanoid.RootPart.CFrame.LookVector * Vector3.new(0.4, 0, 0.4)
 		character:PivotTo(character:GetPivot() + initialDirection * forwardPower + Vector3.new(0, (-i+60)/18, 0))
@@ -112,8 +111,7 @@ function module.butcherLeap(player, cd, damage, windup, forwardPower)
 	task.wait(2.5)
 	abilityReady:FireAllClients(player)
 
-	walkSpeed.Value = 6
-	runSpeed.Value = 33
+	abilitySpeedMult.Value = 1
 	updateSpeed:FireAllClients(player)
 end
 
@@ -122,23 +120,23 @@ function module.butcherPin(player, cd, damage, windup, projectileSpeed, projecti
 	local humanoid = character:WaitForChild("Humanoid")
 	local walkSpeed = player.PlayerAttributes.WalkSpeed
 	local runSpeed = player.PlayerAttributes.RunSpeed
+	local abilitySpeedMult = player.PlayerAttributes.AbilitySpeedMult
 	local dmg = damage
 	local dmgDealt = false
 	local i = 0	
-
+	
+	abilitySpeedMult.Value = 0.25
+	updateSpeed:FireAllClients(player)
+	
 	task.wait(windup)
 	
-	walkSpeed.Value = 2
-	runSpeed.Value = 9
-	updateSpeed:FireAllClients(player)
 	character.Weapon.Handle.Transparency = 1
 	local originalCFrame = humanoid.RootPart.CFrame
 	
 	while i < projectileLifespan * 60 do
 		i += 1
 		if i == 20 then
-			walkSpeed.Value = 6
-			runSpeed.Value = 33
+			abilitySpeedMult.Value = 1
 			updateSpeed:FireAllClients(player)
 			abilityReady:FireAllClients(player)
 
