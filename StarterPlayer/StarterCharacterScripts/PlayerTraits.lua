@@ -10,6 +10,8 @@ local maxStamina = player.PlayerAttributes.MaxStamina
 local maxHealth = player.PlayerAttributes.MaxHealth
 local walkSpeed = player.PlayerAttributes.WalkSpeed
 local runSpeed = player.PlayerAttributes.RunSpeed
+local speedMult = player.PlayerAttributes.SpeedMult
+local abilitySpeedMult = player.PlayerAttributes.AbilitySpeedMult
 local inRound = player.PlayerAttributes.InRound
 local afkMode = player.PlayerAttributes.AfkMode
 local stmDrain = player.PlayerAttributes.StaminaDrain
@@ -47,10 +49,11 @@ end)
 
 updateSpeed.OnClientEvent:Connect(function(plr)
 	if player == plr then
+		print(abilitySpeedMult.Value)
 		if sprinting == true then
-			humanoid.WalkSpeed = runSpeed.Value
+			humanoid.WalkSpeed = runSpeed.Value * speedMult.Value * abilitySpeedMult.Value
 		elseif sprinting == false then
-			humanoid.WalkSpeed = walkSpeed.Value
+			humanoid.WalkSpeed = walkSpeed.Value * speedMult.Value * abilitySpeedMult.Value
 		end
 	end
 end)
@@ -64,10 +67,10 @@ userInputService.InputBegan:Connect(function(input)
 	if input.KeyCode == Enum.KeyCode.LeftShift then
 		holdingShift = true
 		if stamina.Value > 0 then
-			humanoid.WalkSpeed = runSpeed.Value
+			humanoid.WalkSpeed = runSpeed.Value * speedMult.Value * abilitySpeedMult.Value
 			sprinting = true
 		else
-			humanoid.WalkSpeed = walkSpeed.Value
+			humanoid.WalkSpeed = walkSpeed.Value * speedMult.Value * abilitySpeedMult.Value
 			sprinting = false
 		end
 	end
@@ -88,7 +91,7 @@ userInputService.InputEnded:Connect(function(input)
 		end
 	end
 	if input.KeyCode == Enum.KeyCode.LeftShift and shiftRegen == false then
-		humanoid.WalkSpeed = walkSpeed.Value
+		humanoid.WalkSpeed = walkSpeed.Value * speedMult.Value * abilitySpeedMult.Value
 		sprinting = false
 		--[[
 		this is to prevent button-mashing from
@@ -164,7 +167,7 @@ while true do
 	elseif sprinting == true and stamina.Value > 0 and humanoid.MoveDirection.Magnitude > 0 then
 		stamina.Value -= 0.5
 	elseif sprinting == true and stamina.Value == 0 then
-		humanoid.WalkSpeed = walkSpeed.Value
+		humanoid.WalkSpeed = walkSpeed.Value * speedMult.Value * abilitySpeedMult.Value
 		sprinting = false
 		task.wait(1)
 		regenStamina = true
