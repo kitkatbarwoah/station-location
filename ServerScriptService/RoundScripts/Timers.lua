@@ -10,9 +10,7 @@ local prematurelyEndGame = replicatedStorage.TimerFires.PrematurelyEndGame
 
 local quota = replicatedStorage.ServerVariables.Quota
 local quotaProgress = replicatedStorage.ServerVariables.QuotaProgress
-
-local quota = replicatedStorage.ServerVariables.Quota
-local quotaProgress = replicatedStorage.ServerVariables.QuotaProgress
+local winner = replicatedStorage.ServerVariables.Winner
 
 local player = game.Players.LocalPlayer
 local players = game.Players:GetPlayers()
@@ -39,14 +37,15 @@ increaseTime.Event:Connect(function(increase)
 	end
 end)
 
-prematurelyEndGame.Event:Connect(function()
+prematurelyEndGame.Event:Connect(function(outcome)
+	winner.Value = outcome
 	time.Value = 0
 end)
 
 while true do
 	intermission:FireAllClients()
 	roundInProgress.Value = false
-	roundClock(10) -- short for now for testing purposes, will be extended to 45 seconds before final version
+	roundClock(5 + 5) -- short for now for testing purposes, will be extended to 45 seconds before final version
 	round:FireAllClients()
 	
 	quota.Value = 0
@@ -75,6 +74,6 @@ while true do
 	pickTeams:FireAllClients()
 	print(nextJuggernautName .. " is the next juggernaut")
 	roundInProgress.Value = true
-	roundClock(75 + (survivorCount * 35))
+	roundClock(75 + (survivorCount * 35) + 999)
 	task.wait(1)
 end
