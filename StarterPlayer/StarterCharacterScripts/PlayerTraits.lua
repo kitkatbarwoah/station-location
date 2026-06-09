@@ -164,8 +164,17 @@ while true do
 	--stamina mechanics
 	if ((sprinting == false) or (holdingShift == true and humanoid.MoveDirection.Magnitude <= 0)) and stamina.Value < maxStamina.Value and regenStamina == true then
 		stamina.Value += 1
+		if team.Value == "Juggernaut" then
+			stamina.Value += 0.1
+		end
 	elseif sprinting == true and stamina.Value > 0 and humanoid.MoveDirection.Magnitude > 0 then
 		stamina.Value -= 0.5
+		if team.Value == "Juggernaut" then
+			stamina.Value += 0.05
+		end
+		if stamina.Value < 0 then
+			stamina.Value = 0
+		end
 	elseif sprinting == true and stamina.Value == 0 then
 		humanoid.WalkSpeed = walkSpeed.Value * speedMult.Value * abilitySpeedMult.Value
 		sprinting = false
