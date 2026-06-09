@@ -79,7 +79,7 @@ abilityRequest.OnServerEvent:Connect(function(player, abilityno)
 		if team.Value == "Juggernaut" then
 			if equippedJuggernaut.Value == "Butcher" then
 				task.spawn(function() abilityCooldown(1.5) end)
-				abilityStorage.genericM1(player, 1.5, 20, 0.25, 0.25)
+				abilityStorage.genericM1(player, 20, 0.25, 0.25)
 			end
 		end
 	end
@@ -88,7 +88,15 @@ abilityRequest.OnServerEvent:Connect(function(player, abilityno)
 		if team.Value == "Juggernaut" then
 			if equippedJuggernaut.Value == "Butcher" then
 				task.spawn(function() abilityCooldown(15) end)
-				abilityStorage.butcherLeap(player, 15, 25, 0.65, 10.5)
+				abilityStorage.butcherLeap(player, 25, 0.65, 10.5)
+			end
+		elseif team.Value == "Survivor" then
+			if equippedSurvivor.Value == "Archer" then
+				task.spawn(function() abilityCooldown(20) end)
+				abilityStorage.archerArrow(player, 20, 0.75, 1.6, 3)
+			elseif equippedSurvivor.Value == "Doctor" then
+				task.spawn(function() abilityCooldown(36) end)
+				abilityStorage.doctorMedkit(player, 1, 2.5, 0.4)
 			end
 		end
 	end
@@ -97,7 +105,15 @@ abilityRequest.OnServerEvent:Connect(function(player, abilityno)
 		if team.Value == "Juggernaut" then
 			if equippedJuggernaut.Value == "Butcher" then
 				task.spawn(function() abilityCooldown(12) end)
-				abilityStorage.butcherPin(player, 12, 15, 0.5, 4, 3)
+				abilityStorage.butcherPin(player, 15, 0.5, 1.25, 3)
+			end
+		elseif team.Value == "Survivor" then
+			if equippedSurvivor.Value == "Archer" then
+				task.spawn(function() abilityCooldown(24) end)
+				abilityStorage.archerDash(player, 5)
+			elseif equippedSurvivor.Value == "Doctor" then
+				task.spawn(function() abilityCooldown(16) end)
+				abilityStorage.doctorBottle(player, 15, 1.3, 1.25)
 			end
 		end
 	end
