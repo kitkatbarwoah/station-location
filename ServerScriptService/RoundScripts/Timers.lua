@@ -7,6 +7,7 @@ local round = replicatedStorage.TimerFires.BeginRound
 local pickTeams = replicatedStorage.TimerFires.PickTeams
 local increaseTime = replicatedStorage.TimerFires.IncreaseTime
 local prematurelyEndGame = replicatedStorage.TimerFires.PrematurelyEndGame
+local roundEndFade = replicatedStorage.TimerFires.RoundEndFade
 
 local quota = replicatedStorage.ServerVariables.Quota
 local quotaProgress = replicatedStorage.ServerVariables.QuotaProgress
@@ -45,7 +46,7 @@ end)
 while true do
 	intermission:FireAllClients()
 	roundInProgress.Value = false
-	roundClock(5 + 5) -- short for now for testing purposes, will be extended to 45 seconds before final version
+	roundClock(25)
 	round:FireAllClients()
 	
 	quota.Value = 0
@@ -67,13 +68,14 @@ while true do
 	end
 	survivorCount -= 1
 	quota.Value = math.round(survivorCount * 2 / 3)
+	--nextJuggernaut.PlayerAttributes.Team.Value = "Juggernaut"
 	nextJuggernaut.PlayerAttributes.Team.Value = "Juggernaut"
 	nextJuggernaut.PlayerAttributes.Malice.Value = 0
 	selectedJuggernaut.Value = nextJuggernautName
-	wait(1)
+	wait(2)
 	pickTeams:FireAllClients()
 	print(nextJuggernautName .. " is the next juggernaut")
 	roundInProgress.Value = true
-	roundClock(75 + (survivorCount * 35) + 999)
-	task.wait(1)
+	roundClock(85 + (survivorCount * 30))
+	roundEndFade:FireAllClients()
 end
