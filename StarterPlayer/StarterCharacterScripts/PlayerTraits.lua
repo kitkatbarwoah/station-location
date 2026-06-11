@@ -45,7 +45,8 @@ round.OnClientEvent:Connect(function()
 end)
 
 intermission.OnClientEvent:Connect(function()
-	inRound = false
+	inRound.Value = false
+	team.Value = "None"
 end)
 
 updateSpeed.OnClientEvent:Connect(function(plr)
