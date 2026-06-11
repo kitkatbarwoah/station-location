@@ -20,7 +20,7 @@ cooldownReduction.Event:Connect(function(player, abilityno, cdreduction)
 	reduction = cdreduction
 end)
 
-abilityRequest.OnServerEvent:Connect(function(player, abilityno)
+abilityRequest.OnServerEvent:Connect(function(player, abilityno, survivor, juggernaut)
 	--retrieve player data
 	--local playerSettings = dataStoreService:GetDataStore("PlayerStats", "Settings")local character = player.Character or player.CharacterAdded:Wait()
 	--local humanoid = player:WaitForChild("Humanoid")
@@ -28,8 +28,6 @@ abilityRequest.OnServerEvent:Connect(function(player, abilityno)
 	local runSpeed = player.PlayerAttributes.RunSpeed
 	local stmDrain = player.PlayerAttributes.StaminaDrain
 	local team = player.PlayerAttributes.Team
-	local equippedSurvivor = player.PlayerAttributes.EquippedCharacterName
-	local equippedJuggernaut = player.PlayerAttributes.EquippedJuggernautName
 	local cooldown1 = player.PlayerAttributes.Cooldown1
 	local cooldown2 = player.PlayerAttributes.Cooldown2
 	local cooldown3 = player.PlayerAttributes.Cooldown3
@@ -77,27 +75,43 @@ abilityRequest.OnServerEvent:Connect(function(player, abilityno)
 	
 	local function ability1()
 		if team.Value == "Juggernaut" then
-			if equippedJuggernaut.Value == "Butcher" then
+			if juggernaut == "Butcher" then
 				task.spawn(function() abilityCooldown(1.5) end)
-				abilityStorage.genericM1(player, 1.5, 20, 0.25, 0.25)
+				abilityStorage.genericM1(player, 20, 0.25, 0.25)
 			end
 		end
 	end
 	
 	local function ability2()
 		if team.Value == "Juggernaut" then
-			if equippedJuggernaut.Value == "Butcher" then
+			if juggernaut == "Butcher" then
 				task.spawn(function() abilityCooldown(15) end)
-				abilityStorage.butcherLeap(player, 15, 25, 0.65, 10.5)
+				abilityStorage.butcherLeap(player, 25, 0.65, 10.5)
+			end
+		elseif team.Value == "Survivor" then
+			if survivor == "Archer" then
+				task.spawn(function() abilityCooldown(20) end)
+				abilityStorage.archerArrow(player, 20, 0.75, 1.6, 3)
+			elseif survivor == "Doctor" then
+				task.spawn(function() abilityCooldown(36) end)
+				abilityStorage.doctorMedkit(player, 1, 2.5, 0.4)
 			end
 		end
 	end
 	
 	local function ability3()
 		if team.Value == "Juggernaut" then
-			if equippedJuggernaut.Value == "Butcher" then
+			if juggernaut == "Butcher" then
 				task.spawn(function() abilityCooldown(12) end)
-				abilityStorage.butcherPin(player, 12, 15, 0.5, 4, 3)
+				abilityStorage.butcherPin(player, 15, 0.5, 1.25, 3)
+			end
+		elseif team.Value == "Survivor" then
+			if survivor == "Archer" then
+				task.spawn(function() abilityCooldown(24) end)
+				abilityStorage.archerDash(player, 5.5)
+			elseif survivor == "Doctor" then
+				task.spawn(function() abilityCooldown(16) end)
+				abilityStorage.doctorBottle(player, 1.3, 1.6)
 			end
 		end
 	end

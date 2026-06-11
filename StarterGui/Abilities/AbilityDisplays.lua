@@ -54,11 +54,30 @@ pickTeams.OnClientEvent:Connect(function()
 			ability1name.Text = "Slash"
 			ability2name.Text = "Leap"
 			ability3name.Text = "Pin"
+			ability1.Visible = true
+			ability2.Visible = true
+			ability3.Visible = true
+			ability1.Image = "rbxassetid://139044070057155"
+			ability2.Image = "rbxassetid://138465919931479"
+			ability3.Image = "rbxassetid://134436441487827"
 		end
 	elseif team.Value == "Survivor" then
-		if equippedCharacter.Value == "Default" then
-			ability2name.Text = "Cola"
-			ability3name.Text = "Swing"
+		if equippedCharacter.Value == "Archer" then
+			ability2name.Text = "Shoot"
+			ability3name.Text = "Dash"
+			ability1.Visible = false
+			ability2.Visible = true
+			ability3.Visible = true
+			ability2.Image = "rbxassetid://91706523606861"
+			ability3.Image = "rbxassetid://86638596593048"
+		elseif equippedCharacter.Value == "Doctor" then
+			ability2name.Text = "Medkit"
+			ability3name.Text = "Speedkit"
+			ability1.Visible = false
+			ability2.Visible = true
+			ability3.Visible = true
+			ability2.Image = "rbxassetid://96239797269953"
+			ability3.Image = "rbxassetid://102668348710043"
 		end
 	end
 end)

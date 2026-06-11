@@ -30,6 +30,7 @@ local replicatedStorage = game.ReplicatedStorage
 local intermission = replicatedStorage.TimerFires.BeginIntermission
 local round = replicatedStorage.TimerFires.BeginRound
 local updateSpeed = replicatedStorage.CharacterFires.UpdateSpeed
+local requestSpeedChange = replicatedStorage.CharacterFires.RequestSpeedChange
 local playerDeath = replicatedStorage.CharacterFires.PlayerDeath
 local chaseProximity = replicatedStorage.LocalFires.ChaseProximity
 
@@ -44,12 +45,30 @@ round.OnClientEvent:Connect(function()
 end)
 
 intermission.OnClientEvent:Connect(function()
-	inRound = false
+	inRound.Value = false
+	team.Value = "None"
 end)
 
 updateSpeed.OnClientEvent:Connect(function(plr)
 	if player == plr then
-		print(abilitySpeedMult.Value)
+		if sprinting == true then
+			humanoid.WalkSpeed = runSpeed.Value * speedMult.Value * abilitySpeedMult.Value
+		elseif sprinting == false then
+			humanoid.WalkSpeed = walkSpeed.Value * speedMult.Value * abilitySpeedMult.Value
+		end
+	end
+end)
+
+requestSpeedChange.OnClientEvent:Connect(function(plr, boost, duration)
+	if player == plr then
+		speedMult.Value += boost
+		if sprinting == true then
+			humanoid.WalkSpeed = runSpeed.Value * speedMult.Value * abilitySpeedMult.Value
+		elseif sprinting == false then
+			humanoid.WalkSpeed = walkSpeed.Value * speedMult.Value * abilitySpeedMult.Value
+		end
+		task.wait(duration)
+		speedMult.Value -= boost
 		if sprinting == true then
 			humanoid.WalkSpeed = runSpeed.Value * speedMult.Value * abilitySpeedMult.Value
 		elseif sprinting == false then
