@@ -6,6 +6,8 @@ local displayedName = selectionDisplay.CharName
 local equip = selectionDisplay.Equip
 local moreInfo = selectionDisplay.MoreInfo
 local selectionInformation = selection.SelectionInformation
+local selectionText = selectionInformation.SelectionText
+local selectionRender = selectionDisplay.SelectionRender
 
 local replicatedStorage = game.ReplicatedStorage
 local intermission = replicatedStorage.TimerFires.BeginIntermission
@@ -63,6 +65,11 @@ moreInfo.MouseButton1Click:Connect(function()
 	if moreInfo.Text == "More Info" then
 		selectionInformation.Visible = true
 		moreInfo.Text = "Return"
+		if selectedCharacter.Value == "Archer" then
+			selectionText.Text = "A speedy character capable of shooting fast arrows to slow down the Juggernaut and dashing away from attacks."
+		elseif selectedCharacter.Value == "Doctor" then
+			selectionText.Text = "A frail but helpful character capable of healing teammates whether they're close by, far away, clustered up, or alone."
+		end
 	else
 		selectionInformation.Visible = false
 		moreInfo.Text = "More Info"
@@ -72,6 +79,7 @@ end)
 archerButton.MouseButton1Click:Connect(function()
 	selectedCharacter.Value = "Archer"
 	displayedName.Text = "Archer"
+	selectionRender.Image = "rbxassetid://107063898549822"
 	if equippedCharacter.Value == "Archer" then
 		equip.Text = "Equipped"
 	else
@@ -82,6 +90,7 @@ end)
 doctorButton.MouseButton1Click:Connect(function()
 	selectedCharacter.Value = "Doctor"
 	displayedName.Text = "Doctor"
+	selectionRender.Image = "rbxassetid://122439774202880"
 	if equippedCharacter.Value == "Doctor" then
 		equip.Text = "Equipped"
 	else
