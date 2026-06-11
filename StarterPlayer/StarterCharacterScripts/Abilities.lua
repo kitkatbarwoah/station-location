@@ -54,10 +54,27 @@ animation.AnimationId = ("rbxassetid://133013490910372")
 local animTrack4 = humanoid:LoadAnimation(animation)
 animTrack4.Looped = false
 animTrack4.Priority = Enum.AnimationPriority.Action
+animation.AnimationId = ("rbxassetid://83942812333270")
+local animTrack5 = humanoid:LoadAnimation(animation)
+animTrack5.Looped = false
+animTrack5.Priority = Enum.AnimationPriority.Action
+animation.AnimationId = ("rbxassetid://90211828913325")
+local animTrack6 = humanoid:LoadAnimation(animation)
+animTrack6.Looped = false
+animTrack6.Priority = Enum.AnimationPriority.Action
+animation.AnimationId = ("rbxassetid://98433283515095")
+local animTrack7 = humanoid:LoadAnimation(animation)
+animTrack7.Looped = false
+animTrack7.Priority = Enum.AnimationPriority.Action
+animation.AnimationId = ("rbxassetid://113838411002985")
+local animTrack8 = humanoid:LoadAnimation(animation)
+animTrack8.Looped = false
+animTrack8.Priority = Enum.AnimationPriority.Action
 
 pickTeams.OnClientEvent:Connect(function()
 	if inRound.Value == true then
 		canUseAbility = true
+		equippedSurvivor.Value = player.PlayerAttributes.EquippedCharacterName.Value
 	else
 		canUseAbility = false
 	end
@@ -97,35 +114,12 @@ local function ability2()
 			animTrack2:Play()
 		end
 	elseif team.Value == "Survivor" then
-		--[[if equippedSurvivor.Value == "Default" then
-			cooldown2.Value = 40
-			colaSfx:Play()
-
-			--begin drinking
-			walkSpeed.Value = 6
-			runSpeed.Value = 14.5
-			updateSpeed:Fire()
-			task.wait(2)
-			canUseAbility = true
-
-			--initial speed boost
-			walkSpeed.Value = 15.6
-			runSpeed.Value = 37.7
-			updateSpeed:Fire()
-			task.wait(1.5)
-
-			--lesser speed boost
-			walkSpeed.Value = 13.2
-			runSpeed.Value = 31.9
-			updateSpeed:Fire()
-			task.wait(5)
-
-			--speed reset
-			walkSpeed.Value = 12
-			runSpeed.Value = 29
-			updateSpeed:Fire()
-
-		end]]
+		if equippedSurvivor.Value == "Archer" then
+			animTrack5:Play()
+		elseif equippedSurvivor.Value == "Doctor" then
+			animTrack7:Play()
+			print("test")
+		end
 	end
 end
 
@@ -135,50 +129,26 @@ local function ability3()
 			animTrack3:Play()
 		end
 	elseif team.Value == "Survivor" then
-		if equippedSurvivor.Value == "Default" then
-			--[[cooldown3.Value = 35
-			walkSpeed.Value = 2
-			runSpeed.Value = 2
-			updateSpeed:Fire()
-			task.wait(0.7)
-			for i = 1, 22 do
-				local hitboxClone = hitbox:Clone()
-				hitboxClone.Parent = workspace
-				hitboxClone.Size = Vector3.new(5, 5, 5)
-				hitboxClone.CFrame = humanoid.RootPart.CFrame
-				hitboxClone.CFrame *= CFrame.new(0, 1, -3)
-				hitboxClone.CFrame *= CFrame.Angles(0, math.rad(90), 0)
-				hitboxClone.Touched:Connect(function(hit)
-					if hit.Parent:FindFirstChild("Humanoid") then
-						--hit.Parent.Humanoid:TakeDamage(10)
-					end
-				end)
-				task.wait(0.0167)
-				hitboxClone:Destroy()
-			end
-
-			task.wait(0.3)
-			canUseAbility = true
-
-			walkSpeed.Value = 12
-			runSpeed.Value = 29
-			updateSpeed:Fire()]]
+		if equippedSurvivor.Value == "Archer" then
+			animTrack6:Play()
+		elseif equippedSurvivor.Value == "Doctor" then
+			animTrack8:Play()
 		end
 	end
 end
 
 userInputService.InputBegan:Connect(function(input)
-	if input.UserInputType == Enum.UserInputType.MouseButton1 and cooldown1.Value <= 0 and canUseAbility == true then
+	if input.UserInputType == Enum.UserInputType.MouseButton1 and cooldown1.Value <= 0 and canUseAbility == true and team.Value == "Juggernaut" then
 		canUseAbility = false
-		abilityRequest:FireServer(1)
+		abilityRequest:FireServer(1, equippedSurvivor.Value, equippedJuggernaut.Value)
 		ability1()
 	elseif input.KeyCode == Enum.KeyCode.Q and cooldown2.Value <= 0 and canUseAbility == true then
 		canUseAbility = false
-		abilityRequest:FireServer(2)
+		abilityRequest:FireServer(2, equippedSurvivor.Value, equippedJuggernaut.Value)
 		ability2()
 	elseif input.KeyCode == Enum.KeyCode.E and cooldown3.Value <= 0  and canUseAbility == true then
 		canUseAbility = false
-		abilityRequest:FireServer(3)
+		abilityRequest:FireServer(3, equippedSurvivor.Value, equippedJuggernaut.Value)
 		ability3()
 	end
 end)
