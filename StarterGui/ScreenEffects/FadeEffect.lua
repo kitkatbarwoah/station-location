@@ -1,6 +1,7 @@
 local effect = script.Parent
 local replicatedStorage = game.ReplicatedStorage
 local round = replicatedStorage.TimerFires.BeginRound
+local roundEndFade = replicatedStorage.TimerFires.RoundEndFade
 local heartbeat = game:GetService("RunService").Heartbeat
 
 local introLabel = effect.IntroLabel
@@ -37,6 +38,22 @@ round.OnClientEvent:Connect(function()
 		introLabel.TextTransparency += 0.05
 		playerLabel.TextTransparency += 0.05
 		juggernautLabel.TextTransparency += 0.05
+		heartbeat:Wait()
+	end
+	task.wait(1)
+	effect.Visible = false
+end)
+
+roundEndFade.OnClientEvent:Connect(function()
+	effect.Visible = true
+	effect.BackgroundTransparency = 1
+	for i = 1, 20 do
+		effect.BackgroundTransparency -= 0.05
+		heartbeat:Wait()
+	end
+	task.wait(1)
+	for i = 1, 20 do
+		effect.BackgroundTransparency += 0.05
 		heartbeat:Wait()
 	end
 	task.wait(1)
